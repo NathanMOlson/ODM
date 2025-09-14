@@ -35,6 +35,7 @@ rerun_stages = {
     'end_with': None,
     'fast_orthophoto': 'odm_filterpoints',
     'feature_quality': 'opensfm',
+    'feature_threshold_scale': 'opensfm',
     'feature_type': 'opensfm',
     'force_gps': 'opensfm',
     'gcp': 'dataset',
@@ -214,6 +215,15 @@ def config(argv=None, parser=None):
                               'More features can be useful for finding more matches between images, '
                               'potentially allowing the reconstruction of areas with little overlap or insufficient features. '
                               'More features also slow down processing. Default: %(default)s'))
+
+    parser.add_argument('--feature-threshold-scale',
+                        metavar='<positive float>',
+                        action=StoreValue,
+                        type=float,
+                        default=1.0,
+                        help='Scales the contrast threshold for SIFT features. Increasing this value'
+                             'results in fewer features being detected.'
+                             'Default: %(default)s')
 
     parser.add_argument('--feature-type',
                         metavar='<string>',

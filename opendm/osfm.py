@@ -246,6 +246,10 @@ class OSFMContext:
                 matcher_graph_rounds = 0
                 matcher_neighbors = 3
 
+            sift_peak_threshold = 0.066
+            if args.feature_threshold_scale > 0:
+                sift_peak_threshold *= args.feature_threshold_scale
+
             config = [
                 "use_exif_size: no",
                 "flann_algorithm: KDTREE", # more stable, faster than KMEANS
@@ -259,7 +263,7 @@ class OSFMContext:
                 "reconstruction_algorithm: %s" % (args.sfm_algorithm),
                 "undistorted_image_format: tif",
                 "bundle_outlier_filtering_type: AUTO",
-                "sift_peak_threshold: 0.066",
+                f"sift_peak_threshold: {sift_peak_threshold}",
                 "align_orientation_prior: vertical",
                 "triangulation_type: ROBUST",
                 "retriangulation_ratio: 2",
