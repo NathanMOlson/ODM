@@ -38,5 +38,4 @@ jobs:
           context: .
           file: ./test.Dockerfile
           push: true
-          tags: lab308/automosaic:latest
           tags: ghcr.io/${{ steps.tolower.outputs.lowercase }}:latest
