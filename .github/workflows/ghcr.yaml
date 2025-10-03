@@ -25,7 +25,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.REGISTRY_TOKEN }}
 
       - id: tolower
         uses: ASzc/change-string-case-action@v6
@@ -38,4 +38,4 @@ jobs:
           context: .
           file: ./test.Dockerfile
           push: true
-          tags: ghcr.io/${{ steps.tolower.outputs.lowercase }}:latest2
+          tags: ghcr.io/${{ steps.tolower.outputs.lowercase }}:latest
