@@ -43,6 +43,7 @@ parts:
       - libssl-dev
       - libusb-1.0-0-dev
       - ninja-build
+      - nlohmann-json3-dev
       - pkg-config
       - pybind11-dev
       - python3-dev
@@ -60,6 +61,7 @@ parts:
       - libspqr4
       - libssl3t64
       - libusb-1.0-0
+      - nlohmann-json3-dev
       - proj-data
       - procps
       - python3
@@ -105,21 +107,7 @@ parts:
       - libtiff6
       - libwebpdemux2
       - libxext6
-  
-  openmvs:
-    source: .
-    plugin: nil
-    build-packages:
-      - libcgal-dev
-      - libboost-program-options-dev
-      - libboost-iostreams-dev
-      - libboost-serialization-dev
-      - libboost-system-dev
-    stage-packages:
-      - libboost-program-options1.83.0
-      - libboost-iostreams1.83.0
-      - libboost-serialization1.83.0
-      - libboost-system1.83.0
+
 
   opensfm:
     source: .
@@ -142,7 +130,6 @@ parts:
       - prereqs
       - opencv
       - opensfm
-      - openmvs
     source: .
     plugin: nil # We will script everything ourselves
     build-environment:

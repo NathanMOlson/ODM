@@ -166,26 +166,10 @@ set(custom_libs OpenSfM
 				LASzip
 				PDAL
 				PDALPython
-				Untwine
-				Entwine
-				MvsTexturing
-				OpenMVS
 				FPCFilter
 				PyPopsift
-				Obj2Tiles
-				OpenPointClass
 				ExifTool
 				RenderDEM
-)
-
-externalproject_add(mve
-    GIT_REPOSITORY  https://github.com/OpenDroneMap/mve.git
-    GIT_TAG         356
-    UPDATE_COMMAND  ""
-    SOURCE_DIR      ${SB_SOURCE_DIR}/mve
-    CMAKE_ARGS      ${WIN32_CMAKE_ARGS} ${APPLE_CMAKE_ARGS}
-    BUILD_IN_SOURCE 1
-    INSTALL_COMMAND ""
 )
 
 foreach(lib ${custom_libs})
@@ -195,56 +179,14 @@ endforeach()
 include(ProcessorCount)
 ProcessorCount(nproc)
 
-if (WIN32)
-    set (POISSON_BUILD_CMD ${CMAKE_MAKE_PROGRAM} ${SB_SOURCE_DIR}/PoissonRecon/PoissonRecon.vcxproj /p:configuration=${CMAKE_BUILD_TYPE} /p:Platform=x64 /p:PlatformToolset=${CMAKE_VS_PLATFORM_TOOLSET} /p:WindowsTargetPlatformVersion=${CMAKE_VS_WINDOWS_TARGET_PLATFORM_VERSION})
-    set (POISSON_BIN_PATH "x64/${CMAKE_BUILD_TYPE}/PoissonRecon.exe")
-else()
-    set (POISSON_BUILD_CMD  make -j${nproc} poissonrecon)
-    set (POISSON_BIN_PATH "Linux/PoissonRecon")
-    if (APPLE)
-        set(POISSON_BUILD_CMD COMPILER=${CMAKE_CXX_COMPILER} make -j${nproc} -f Makefile.macos poissonrecon)
-    endif()
-endif()
-externalproject_add(poissonrecon
-    GIT_REPOSITORY    https://github.com/OpenDroneMap/PoissonRecon.git
-    GIT_TAG           290
-    PREFIX            ${SB_BINARY_DIR}/PoissonRecon
-    SOURCE_DIR        ${SB_SOURCE_DIR}/PoissonRecon
-    UPDATE_COMMAND    ""
-    CONFIGURE_COMMAND ""
-    BUILD_IN_SOURCE 1
-    BUILD_COMMAND    ${POISSON_BUILD_CMD}
-    INSTALL_COMMAND  ${CMAKE_COMMAND} -E copy ${SB_SOURCE_DIR}/PoissonRecon/Bin/${POISSON_BIN_PATH} ${SB_INSTALL_DIR}/bin
-)
-
-externalproject_add(dem2mesh
-    GIT_REPOSITORY    https://github.com/OpenDroneMap/dem2mesh.git
-    GIT_TAG           334
-    PREFIX            ${SB_BINARY_DIR}/dem2mesh
-    SOURCE_DIR        ${SB_SOURCE_DIR}/dem2mesh
-    CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR}
-                      ${WIN32_GDAL_ARGS}
-                      ${APPLE_CMAKE_ARGS}
-)
-
-externalproject_add(dem2points
-    GIT_REPOSITORY    https://github.com/OpenDroneMap/dem2points.git
-    GIT_TAG           master
-    PREFIX            ${SB_BINARY_DIR}/dem2points
-    SOURCE_DIR        ${SB_SOURCE_DIR}/dem2points
-    CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR}
-                      ${WIN32_GDAL_ARGS}
-                      ${APPLE_CMAKE_ARGS}
-)
-
-externalproject_add(odm_orthophoto
+externalproject_add(dem2mosaic
     DEPENDS           opencv 
-    GIT_REPOSITORY    https://github.com/OpenDroneMap/odm_orthophoto.git
-    GIT_TAG           355
-    PREFIX            ${SB_BINARY_DIR}/odm_orthophoto
-    SOURCE_DIR        ${SB_SOURCE_DIR}/odm_orthophoto
-    CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR}
-                      ${WIN32_CMAKE_ARGS} ${WIN32_GDAL_ARGS}
+    GIT_REPOSITORY    https://github.com/NathanMOlson/dem2mosaic
+    GIT_TAG           main
+    PREFIX            ${SB_BINARY_DIR}/dem2mosaic
+    SOURCE_DIR        ${SB_SOURCE_DIR}/dem2mosaic
+    CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR} 
+                      ${WIN32_CMAKE_ARGS}
 )
 
 externalproject_add(fastrasterfilter
@@ -262,15 +204,4 @@ externalproject_add(lastools
     PREFIX            ${SB_BINARY_DIR}/lastools
     SOURCE_DIR        ${SB_SOURCE_DIR}/lastools
     CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR}
-)
-
-externalproject_add(draco
-    GIT_REPOSITORY    https://github.com/google/draco
-    GIT_SHALLOW       OFF
-    GIT_TAG           e801aebf9665f6dcf3b6b0a604055a300ff85aa4
-    PREFIX            ${SB_BINARY_DIR}/draco
-    SOURCE_DIR        ${SB_SOURCE_DIR}/draco
-    CMAKE_ARGS        -DDRACO_TRANSCODER_SUPPORTED=ON 
-                      -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR} 
-                      ${WIN32_CMAKE_ARGS}
 )
