@@ -168,7 +168,6 @@ set(custom_libs OpenSfM
 				PDALPython
 				FPCFilter
 				PyPopsift
-				ExifTool
 				RenderDEM
 )
 
@@ -196,12 +195,4 @@ externalproject_add(fastrasterfilter
     SOURCE_DIR        ${SB_SOURCE_DIR}/fastrasterfilter
     CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR}
                       ${WIN32_CMAKE_ARGS} ${WIN32_GDAL_ARGS}
-)
-
-externalproject_add(lastools
-    GIT_REPOSITORY    https://github.com/OpenDroneMap/LAStools.git
-    GIT_TAG           250
-    PREFIX            ${SB_BINARY_DIR}/lastools
-    SOURCE_DIR        ${SB_SOURCE_DIR}/lastools
-    CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR}
 )
