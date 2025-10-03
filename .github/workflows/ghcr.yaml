@@ -12,8 +12,6 @@ jobs:
     permissions:
       contents: read
       packages: write
-      attestations: write
-      id-token: write
 
     steps:
       - name: Checkout repository
@@ -40,4 +38,4 @@ jobs:
           context: .
           file: ./test.Dockerfile
           push: true
-          tags: ghcr.io/${{ steps.tolower.outputs.lowercase }}:latest
+          tags: ghcr.io/${{ steps.tolower.outputs.lowercase }}:latest2
