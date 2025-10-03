@@ -129,7 +129,7 @@ installreqs() {
     installdepsfromsnapcraft build opensfm
     echo "Installing OpenMVS Dependencies"
     installdepsfromsnapcraft build openmvs
-    
+
     set -e
 
     # edt requires numpy to build
