@@ -1,4 +1,6 @@
-import os, traceback, sys
+import os
+import traceback
+import sys
 
 from opendm import system
 from opendm import log
@@ -8,6 +10,7 @@ from opendm.progress import progressbc
 
 from stages.dataset import ODMLoadDatasetStage
 from stages.dem2mosaic import DEM2Mosaic
+
 from stages.run_opensfm import ODMOpenSfMStage
 from stages.odm_filterpoints import ODMFilterPoints
 from opendm.arghelpers import args_to_dict, save_opts, find_rerun_stage
@@ -24,18 +27,17 @@ class LightningOrtho:
             json_log_paths.append(args.copy_to)
 
         log.logger.init_json_output(json_log_paths, args)
-        
+
         dataset = ODMLoadDatasetStage('dataset', args, progress=5.0)
         opensfm = ODMOpenSfMStage('opensfm', args, progress=25.0)
         filterpoints = ODMFilterPoints('odm_filterpoints', args, progress=52.0)
         dem2mosaic = DEM2Mosaic('dem2mosaic', args, progress=88.0)
-        
+
         # Normal pipeline
         self.first_stage = dataset
 
         dataset.connect(opensfm).connect(filterpoints).connect(dem2mosaic)
 
-                
     def execute(self):
         try:
             self.first_stage.run()
@@ -78,6 +80,7 @@ class LightningOrtho:
         finally:
             log.logger.close()
 
+
 def odm_version():
     try:
         with open("VERSION") as f:
@@ -85,7 +88,8 @@ def odm_version():
     except:
         return "?"
 
-if __name__ == '__main__':
+
+def main():
     args = config.config()
 
     log.ODM_INFO('Initializing ODM %s - %s' % (odm_version(), system.now()))
@@ -109,15 +113,14 @@ if __name__ == '__main__':
     for k in args_dict.keys():
         log.ODM_INFO('%s: %s%s' % (k, args_dict[k], ' [changed]' if k in opts_diff else ''))
     log.ODM_INFO('==============')
-    
 
     # If user asks to rerun everything, delete all of the existing progress directories.
     if args.rerun_all:
         log.ODM_INFO("Rerun all -- Removing old data")
         for d in [os.path.join(args.project_path, p) for p in get_processing_results_paths()] + [
-                  os.path.join(args.project_path, "opensfm"),
-                  os.path.join(args.project_path, "odm_filterpoints"),
-                  os.path.join(args.project_path, "dem2mosaic")]:
+                os.path.join(args.project_path, "opensfm"),
+                os.path.join(args.project_path, "odm_filterpoints"),
+                os.path.join(args.project_path, "dem2mosaic")]:
             rm_r(d)
 
     app = LightningOrtho(args)
@@ -128,3 +131,7 @@ if __name__ == '__main__':
         log.ODM_INFO('ODM app finished - %s' % system.now())
     else:
         exit(retcode)
+
+
+if __name__ == '__main__':
+    main()
