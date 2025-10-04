@@ -96,13 +96,8 @@ if (WIN32)
 
   # Use the GDAL version that comes with pip
   set(GDAL_ROOT "${PYTHON_HOME}/Lib/site-packages/osgeo")
-  set(GDAL_LIBRARY "${GDAL_ROOT}/lib/gdal_i.lib")
+  set(GDAL_LIBRARY "${GDAL_ROOT}/gdal.lib")
   set(GDAL_INCLUDE_DIR "${GDAL_ROOT}/include/gdal")
-
-  # Also download missing headers :/
-  if (NOT EXISTS "${GDAL_INCLUDE_DIR}/ogrsf_frmts.h")
-    file(DOWNLOAD "https://raw.githubusercontent.com/OSGeo/gdal/release/3.2/gdal/ogr/ogrsf_frmts/ogrsf_frmts.h" "${GDAL_INCLUDE_DIR}/ogrsf_frmts.h")
-  endif()
 
   message("Copying VCPKG DLLs...")
   file(GLOB COPY_DLLS "${VCPKG_ROOT}/installed/x64-windows/bin/*.dll")
@@ -152,7 +147,7 @@ SETUP_EXTERNAL_PROJECT(GFlags ${ODM_GFlags_Version} ${ODM_BUILD_GFlags})
 # ---------------------------------------------------------------------------------------------
 # Ceres Solver
 #
-set(ODM_Ceres_Version 2.2.0)
+set(ODM_Ceres_Version 2.0.0)
 option(ODM_BUILD_Ceres "Force to build Ceres library" OFF)
 
 SETUP_EXTERNAL_PROJECT(Ceres ${ODM_Ceres_Version} ${ODM_BUILD_Ceres})
@@ -270,9 +265,9 @@ externalproject_add(lastools
 )
 
 externalproject_add(draco
-    GIT_REPOSITORY    https://github.com/NathanMOlson/draco.git
+    GIT_REPOSITORY    https://github.com/OpenDroneMap/draco
     GIT_SHALLOW       ON
-    GIT_TAG           3564517973d5dc0fecb7b2f07bdc0b4894d36aa6
+    GIT_TAG           915105aef5d0e0fbebc5a98238cfda10f06e61b9
     PREFIX            ${SB_BINARY_DIR}/draco
     SOURCE_DIR        ${SB_SOURCE_DIR}/draco
     CMAKE_ARGS        -DDRACO_TRANSCODER_SUPPORTED=ON 
