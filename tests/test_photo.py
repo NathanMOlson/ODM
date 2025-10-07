@@ -5,7 +5,7 @@ import shutil
 from opendm.photo import ODM_Photo
 
 
-class TestGcp(unittest.TestCase):
+class TestPhoto(unittest.TestCase):
     def setUp(self):
         pass
 
