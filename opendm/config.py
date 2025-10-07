@@ -45,6 +45,7 @@ rerun_stages = {
     'gps_z_offset': 'dataset',
     'help': None,
     'ignore_gsd': 'opensfm',
+    'ignore_ypr': 'dataset',
     'matcher_neighbors': 'opensfm',
     'matcher_order': 'opensfm',
     'matcher_type': 'opensfm',
@@ -382,6 +383,15 @@ def config(argv=None, parser=None):
                         'Ordinarily, GSD estimates are used to cap the maximum resolution of image outputs and resizes images when necessary, resulting in faster processing and lower memory usage. '
                         'Since GSD is an estimate, sometimes ignoring it can result in slightly better image output quality. '
                         'Never set --ignore-gsd to true unless you are positive you need it, and even then: do not use it. Default: %(default)s')
+
+    parser.add_argument('--ignore-ypr',
+                        action=StoreTrue,
+                        nargs=0,
+                        default=False,
+                        help='Ignore Yaw/Pitch/Roll angles in image metadata.'
+                        'Ignore the yaw, pitch, and roll angles embedded in the image metadata. '
+                        'This is useful if the embedded yaw/pitch/roll angles are far from correct. '
+                        'If the images have no embedded yaw/pitch/roll, this flag does nothing. Default: %(default)s')
 
     parser.add_argument('--no-gpu',
                     action=StoreTrue,
