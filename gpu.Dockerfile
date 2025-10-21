@@ -40,8 +40,6 @@ COPY --from=builder /code /code
 
 ENV PATH="/code/venv/bin:$PATH"
 
-ENV PATH="/code/venv/bin:$PATH"
-
 RUN apt-get update -y \
  && apt-get install -y ffmpeg libtbb2
 # Install shared libraries that we depend on via APT, but *not*
