@@ -943,6 +943,14 @@ class ODM_Photo:
             self.phi = math.degrees(math.asin(ceb[0][2]))
             self.kappa = math.degrees(math.atan2(-ceb[0][1], ceb[0][0]))
 
+    def clear_ypr_opk(self):
+        self.yaw = None
+        self.pitch = None
+        self.roll = None
+        self.omega = None
+        self.phi = None
+        self.kappa = None
+
     def get_capture_megapixels(self):
         if self.exif_width is not None and self.exif_height is not None:
             # Accurate so long as resizing / postprocess software

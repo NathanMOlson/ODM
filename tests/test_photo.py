@@ -10,7 +10,7 @@ class TestPhoto(unittest.TestCase):
         pass
 
     def test_jpeg_xl(self):
-        photo = ODM_Photo("tests/assets/test_0001.jxl")
+        photo = ODM_Photo("tests/assets/datasets/single_image/images/test_0001.jxl")
         self.assertEqual(photo.width, 1280)
         self.assertEqual(photo.height, 1024)
         self.assertEqual(photo.camera_make, "Lab 308")

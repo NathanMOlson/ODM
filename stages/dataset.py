@@ -169,6 +169,8 @@ class ODMLoadDatasetStage(types.ODM_Stage):
                     for f in path_files:
                         try:
                             p = types.ODM_Photo(f)
+                            if args.ignore_ypr:
+                                p.clear_ypr_opk()
                             p.set_mask(find_mask(f, masks))
                             photos.append(p)
                             dataset_list.write(photos[-1].filename + '\n')
