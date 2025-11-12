@@ -181,7 +181,7 @@ ProcessorCount(nproc)
 externalproject_add(dem2mosaic
     DEPENDS           opencv 
     GIT_REPOSITORY    https://github.com/NathanMOlson/dem2mosaic
-    GIT_TAG           main
+    GIT_TAG           cc1e1a5037f8bfd6158b5d9ff0a492b725353923
     PREFIX            ${SB_BINARY_DIR}/dem2mosaic
     SOURCE_DIR        ${SB_SOURCE_DIR}/dem2mosaic
     CMAKE_ARGS        -DCMAKE_INSTALL_PREFIX:PATH=${SB_INSTALL_DIR} 
