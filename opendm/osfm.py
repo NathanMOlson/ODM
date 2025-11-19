@@ -269,7 +269,8 @@ class OSFMContext:
                 "retriangulation_ratio: 2",
                 "triangulation_min_ray_angle: 0.1",
                 "triangulation_threshold: 0.01",
-                "resection_threshold: 0.01"
+                "resection_threshold: 0.01",
+                "resect_redundancy_threshold: 1.0"
             ]
             
             if args.matcher_order > 0:
