@@ -267,6 +267,9 @@ class OSFMContext:
                 "align_orientation_prior: vertical",
                 "triangulation_type: ROBUST",
                 "retriangulation_ratio: 2",
+                "triangulation_min_ray_angle: 0.1",
+                "triangulation_threshold: 0.01",
+                "resection_threshold: 0.01"
             ]
             
             if args.matcher_order > 0:
