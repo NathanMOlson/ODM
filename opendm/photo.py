@@ -148,6 +148,9 @@ class ODM_Photo:
         self.phi = None
         self.kappa = None
 
+        # distortion
+        self.distortion = None
+
         # DLS
         self.sun_sensor = None
         self.dls_yaw = None
@@ -458,6 +461,18 @@ class ODM_Photo:
 
                         if camera_projection in projections:
                             self.camera_projection = camera_projection
+
+                    camera_distortion = self.get_xmp_tag(xtags, ['Camera:PerspectiveDistortion'])
+                    if camera_distortion is not None:
+                        dist_params = camera_distortion.split(',')
+                        self.distortion = {
+                            'k1': float(dist_params[0]),
+                            'k2': float(dist_params[1]),
+                            'k3': float(dist_params[2]),
+                            'p1': float(dist_params[3]),
+                            'p2': float(dist_params[4]),
+                        }
+                        
 
                     # OPK
                     self.set_attr_from_xmp_tag('yaw', xtags, ['@drone-dji:FlightYawDegree', '@Camera:Yaw', 'Camera:Yaw'], float)
@@ -855,6 +870,13 @@ class ODM_Photo:
             "camera": self.camera_id()
         }
 
+        if self.has_distortion():
+            d['k1'] = self.distortion['k1']
+            d['k2'] = self.distortion['k2']
+            d['k3'] = self.distortion['k3']
+            d['p1'] = self.distortion['p1']
+            d['p2'] = self.distortion['p2']
+
         if self.has_opk():
             d['opk'] = {
                 'omega': self.omega,
@@ -880,6 +902,9 @@ class ODM_Photo:
         return self.omega is not None and \
             self.phi is not None and \
             self.kappa is not None
+    
+    def has_distortion(self):
+        return self.distortion is not None
     
     def has_speed(self):
         return self.speed_x is not None and \
