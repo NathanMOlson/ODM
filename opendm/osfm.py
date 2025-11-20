@@ -24,6 +24,7 @@ from opendm.multispectral import get_photos_by_band
 from opendm.gpu import has_popsift_and_can_handle_texsize, has_gpu
 from opensfm import multiview, exif
 from opensfm.actions.export_geocoords import _transform
+from opendm.trim_reconstructions import trim_reconstructions_json
 
 class OSFMContext:
     def __init__(self, opensfm_project_path):
@@ -55,6 +56,8 @@ class OSFMContext:
             self.run('reconstruct')
             if merge_partial:
                 self.check_merge_partial_reconstructions()
+            log.ODM_INFO(f"Trimming reconstructions")
+            trim_reconstructions_json(reconstruction_file, 75)
         else:
             log.ODM_WARNING('Found a valid OpenSfM reconstruction file in: %s' % reconstruction_file)
 
