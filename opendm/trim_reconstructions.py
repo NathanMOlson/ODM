@@ -10,7 +10,7 @@ def trim_reconstructions_json(filename: str, max_angle_deg: float) -> None:
     with open(filename, "rt") as fin:
         reconstructions = io.reconstructions_from_json(io.json_load(fin))
 
-    reconstructions = trim_reconstructions(reconstructions, max_angle_deg: float)
+    reconstructions = trim_reconstructions(reconstructions, max_angle_deg)
     
     with open(filename, "wt") as fout:
         io.json_dump(io.reconstructions_to_json(reconstructions), fout, minify=False)
