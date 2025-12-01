@@ -930,43 +930,11 @@ class ODM_Photo:
                             [ -math.sin(p), math.cos(p) * math.sin(r), math.cos(p) * math.cos(r)],
                            ])
 
-            # Convert between image and body coordinates
-            # Top of image pixels point to flying direction
-            # and camera is looking down.
-            # We might need to change this if we want different
-            # camera mount orientations (e.g. backward or sideways)
+            R = np.array([[0, 1, 0], [-1, 0, 0], [0, 0, 1]]).dot(cnb.T).dot([[0, 1, 0], [1, 0, 0], [0, 0, -1]])
 
-            # (Swap X/Y, flip Z)
-            cbb = np.array([[0, 1, 0],
-                            [1, 0, 0],
-                            [0, 0, -1]])
-            
-            delta = 1e-7
-            
-            alt = self.altitude if self.altitude is not None else 0.0
-            p1 = np.array(ecef_from_lla(self.latitude + delta, self.longitude, alt))
-            p2 = np.array(ecef_from_lla(self.latitude - delta, self.longitude, alt))
-            xnp = p1 - p2
-            m = np.linalg.norm(xnp)
-            
-            if m == 0:
-                log.ODM_WARNING("Cannot compute OPK angles, divider = 0")
-                return
-            
-            # Unit vector pointing north
-            xnp /= m
-
-            znp = np.array([0, 0, -1]).T
-            ynp = np.cross(znp, xnp)
-
-            cen = np.array([xnp, ynp, znp]).T
-
-            # OPK rotation matrix
-            ceb = cen.dot(cnb).dot(cbb)
-
-            self.omega = math.degrees(math.atan2(-ceb[1][2], ceb[2][2]))
-            self.phi = math.degrees(math.asin(ceb[0][2]))
-            self.kappa = math.degrees(math.atan2(-ceb[0][1], ceb[0][0]))
+            self.omega = math.degrees(-math.atan2(-R[2, 1], -R[2, 2])) if R[2, 1] != 0.0 and R[2, 2] != 0.0 else 0.0
+            self.phi = math.degrees(-math.asin(R[2, 0]))
+            self.kappa = math.degrees(math.atan2(R[1, 0], R[0, 0])) if R[1, 0] != 0.0 and R[0, 0] != 0.0 else 0.0
 
     def clear_ypr_opk(self):
         self.yaw = None
