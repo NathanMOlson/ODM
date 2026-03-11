@@ -37,6 +37,7 @@ parts:
       - gdal-bin
       - gfortran # to build scipy
       - git
+      - libexif-dev
       - libgdal-dev
       - libgeotiff-dev
       - libjsoncpp-dev
