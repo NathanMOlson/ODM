@@ -56,7 +56,7 @@ parts:
       - swig3.0
     stage-packages:
       - gdal-bin
-      - libexif
+      - libexif12
       - libgdal34t64
       - libgeotiff5
       - libjsoncpp25
