@@ -3,7 +3,7 @@ name: Build and Upload Docker Image
 on:
   push:
     branches:
-      - lab308
+      - lab308_rgb
 
 jobs:
   build-and-upload:
