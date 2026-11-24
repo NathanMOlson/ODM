@@ -104,10 +104,6 @@ installruntimedepsonly() {
     installdepsfromsnapcraft runtime prereqs
     echo "Installing OpenCV Dependencies"
     installdepsfromsnapcraft runtime opencv
-    wget https://github.com/libjxl/libjxl/releases/download/v0.13.0/jxl-debs-amd64-ubuntu-24.04.tar
-    tar -xf jxl-debs-amd64-ubuntu-24.04.tar libjxl_0.13.0_amd64.deb
-    dpkg -i libjxl_0.13.0_amd64.deb
-    rm jxl-debs-amd64-ubuntu-24.04.tar libjxl_0.13.0_amd64.deb
     echo "Installing OpenSfM Dependencies"
     installdepsfromsnapcraft runtime opensfm
     echo "Installing OpenMVS Dependencies"
@@ -129,10 +125,6 @@ installreqs() {
     installdepsfromsnapcraft build prereqs
     echo "Installing OpenCV Dependencies"
     installdepsfromsnapcraft build opencv
-    wget https://github.com/libjxl/libjxl/releases/download/v0.13.0/jxl-debs-amd64-ubuntu-24.04.tar
-    tar -xf jxl-debs-amd64-ubuntu-24.04.tar libjxl-dev_0.13.0_amd64.deb libjxl_0.13.0_amd64.deb
-    dpkg -i libjxl-dev_0.13.0_amd64.deb libjxl_0.13.0_amd64.deb
-    rm jxl-debs-amd64-ubuntu-24.04.tar libjxl-dev_0.13.0_amd64.deb libjxl_0.13.0_amd64.deb
     echo "Installing OpenSfM Dependencies"
     installdepsfromsnapcraft build opensfm
     echo "Installing OpenMVS Dependencies"
