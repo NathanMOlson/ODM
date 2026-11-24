@@ -54,6 +54,7 @@ parts:
       - python3-wheel
       - rsync
       - swig3.0
+      - wget
     stage-packages:
       - gdal-bin
       - libexif12
@@ -71,6 +72,7 @@ parts:
       - python3-pkg-resources # required base package for core20
       - python3-requests # required base package for core20
       - python3-setuptools
+      - wget
     stage:
       # remove deb-based numpy because it conflicts with our pip-installed version
       - -usr/lib/python3/dist-packages/numpy
@@ -84,8 +86,8 @@ parts:
       - libeigen3-dev
       - libflann-dev
       - libgtk2.0-dev
+      - libhwy-dev
       - libjpeg-dev
-      - libjxl-dev
       - liblapack-dev
       - libopenjpip7
       - libpng-dev
@@ -100,8 +102,8 @@ parts:
       - libavformat60
       - libflann1.9
       - libgtk2.0-0
+      - libhwy0
       - libjpeg-turbo8
-      - libjxl0.7
       - libopenjpip7
       - liblapack3
       - libpng16-16
